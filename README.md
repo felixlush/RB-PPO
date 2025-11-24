@@ -1,4 +1,4 @@
-# Simglucose PPO Controller
+# RB-PPO An Hybrid RL Hybdrid Closed Loop Controller
 
 ## Project Overview
 
@@ -14,7 +14,6 @@ This repository contains the code base for my Honours project on learning a full
 - `eval_scripts/` – scripts for offline evaluation, batch report generation, and comparison against classical controllers.
 - `config/` – patient splits for train/eval cohorts and TensorBoard scalar definitions used during analysis.
 - `test_scripts/` – pytest-based smoke tests for wrappers, reward shaping, and the PPO controller logic.
-- `runs/`, `logs/`, `results/` – artefact folders for checkpoints, TensorBoard output, and CSV summaries (these grow quickly when running experiments).
 
 ## Getting Started
 
@@ -29,11 +28,6 @@ This repository contains the code base for my Honours project on learning a full
      ```
 
    - The project also relies on `pkg_resources`, `matplotlib`, and `pytest` which will be pulled transitively or can be added explicitly.
-2. **Simulator assets**  
-   - `simglucose` ships with the patient Quest parameters and meal scenarios required by the wrappers. No additional datasets are needed.
-3. **Folder hygiene**  
-   - Keep `runs/` and `logs/` under version control ignore (large binary artefacts).  
-   - Use meaningful `--run_name` strings to track experiments, e.g. `RB-PPO_seed108_safety_update`.
 
 ## Training Workflows
 
@@ -73,16 +67,6 @@ Everything after `--` is forwarded to `train_ppo_v2.py`. Each run is stamped wit
 - `eval_scripts/concat_final_results.py` merges per-patient CSVs into a single table for figures.  
 - Classical controller baselines (e.g., PID) are collected through `eval_scripts/evaluate_classic_controllers.py` for head-to-head comparisons.
 - For in-simulator deployment, load the trained weights with `ppo_controller.PPOController` and register it with the `simglucose` experiment runner.
-
-## Testing
-
-Lightweight tests live in `test_scripts/` and can be executed with:
-
-```bash
-pytest test_scripts
-```
-
-They focus on wrapper behaviours (safety gate, meal logic) and the reward implementation. Extend these tests when adding new wrappers or controllers to keep regression coverage.
 
 ## Honours Project Notes
 
